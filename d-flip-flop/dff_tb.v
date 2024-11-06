@@ -3,9 +3,9 @@
 
 module dff_tb;
     reg clk, data;
-    wire q, q_bar;
+    wire q;
 
-    dff uut(clk, data, q, q_bar);
+    dff uut(clk, data, q);
 
     initial begin
         $dumpfile("dff.vcd");

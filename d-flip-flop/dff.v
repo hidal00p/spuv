@@ -1,12 +1,9 @@
-module dff (clk, data, q, q_bar);
+module dff (clk, data, q);
     input clk, data;
-    output q, q_bar;
+    output q;
 
-    wire into_q, into_q_bar;
+    wire q_bar;
 
-    assign into_q = clk & ~data;
-    assign into_q_bar = clk & data;
-
-    assign q = ~(into_q | q_bar);
-    assign q_bar = ~(into_q_bar | q);
+    assign q = ~((clk & ~data) | q_bar);
+    assign q_bar = ~((clk & data) | q);
 endmodule
