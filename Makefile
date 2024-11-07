@@ -1,26 +1,13 @@
-# THIS IS JUST A TEMPLATE FILE FOR THE COMPONENT DIRECTORIES
+ALL_COMPONENTS := $(shell find . -maxdepth 1 -type d -not -path './.*' -and -not -path ".")
 
-# Add the name of component there
-COMPONENT = 
+build-all:
+	@for dir in $(ALL_COMPONENTS) ; do \
+		$(MAKE) -C $$dir ; \
+	done
 
-# Add paths to dependency components
-INCLUDE_FLAGS = 
+clean-all:
+	@for dir in $(ALL_COMPONENTS) ; do \
+		$(MAKE) -C $$dir clean ; \
+	done
 
-all: exe
-
-exe: $(COMPONENT)_tb.vvp 
-	@vvp $<
-
-view: all
-	gtkwave $(COMPONENT).vcd
-
-$(COMPONENT)_tb.vvp: $(COMPONENT).v $(COMPONENT)_tb.v
-	@iverilog $(INCLUDE_FLAGS) -o $(COMPONENT)_tb.vvp $(COMPONENT)_tb.v
-
-start:
-	touch $(COMPONENT).v $(COMPONENT)_tb.v
-
-clean:
-	rm -f $(COMPONENT)_tb.vvp $(COMPONENT).vcd
-
-.PHONY: clean start
+.PHONY: build-all clean-all
